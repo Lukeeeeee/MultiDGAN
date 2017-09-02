@@ -73,7 +73,6 @@ def __main__():
     # 		if item not in D1_vars:
     # 			D2_vars.append(item)
 
-
     d1_real = D1
     d2_real = D2
 
@@ -95,9 +94,9 @@ def __main__():
     # loss_train_D = loss_train_D1 + loss_train_D2
     # tf.summary.scalar('d_loss',loss_train_D)
 
-    loss_train_G = 0.5 * tf.reduce_mean(
+    loss_train_G = D1_LOSS * tf.reduce_mean(
         tf.nn.sigmoid_cross_entropy_with_logits(logits=d1_fake, labels=tf.ones_like(d1_fake))) \
-                   + 0.5 * tf.reduce_mean(
+                   + D2_LOSS * tf.reduce_mean(
         tf.nn.sigmoid_cross_entropy_with_logits(logits=d2_fake, labels=tf.ones_like(d2_fake)))
     tf.summary.scalar('g_loss', loss_train_G)
     # loss_train_G = d_fake
