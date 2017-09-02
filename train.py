@@ -4,19 +4,22 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 from glob import glob
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+
 from model import *
 from pre_data import *
 import datetime
 
 Image_h = 96
 Image_w = 96
-Sample_num = 50000
+Sample_num = 30000
 Epoch_num = 400
+
 Batch_size = 128
 G_learnrate = 1e-3
 D_learnrate = 1e-3
-D1_LOSS = 0.5
-D2_LOSS = 0.5
+D1_LOSS = 0.9
+D2_LOSS = 0.1
 ti = datetime.datetime.now()
 log_dir = (
      'log/' + str(D1_LOSS) + '_' + str(D2_LOSS) + '/' + str(ti.month) + '-' + str(ti.day) + '-' + str(ti.hour) + '-' + str(ti.minute)
