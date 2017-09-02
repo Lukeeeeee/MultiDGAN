@@ -1,10 +1,25 @@
 # dcgan by liming @17.7.10
+"""
+Train 1.0
+
+Usage:
+    train.py device <device> d1 <d1> d2 <d2>
+
+Options:
+	-h --help
+"""
+
+
 import os
+import sys
+from docopt import docopt
+CURRENT_PATH = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(CURRENT_PATH)
+
 import tensorflow as tf
 import numpy as np
 from PIL import Image
 from glob import glob
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 from model import *
 from pre_data import *
@@ -18,13 +33,6 @@ Epoch_num = 400
 Batch_size = 128
 G_learnrate = 1e-3
 D_learnrate = 1e-3
-D1_LOSS = 0.9
-D2_LOSS = 0.1
-ti = datetime.datetime.now()
-log_dir = (
-     'log/' + str(D1_LOSS) + '_' + str(D2_LOSS) + '/' + str(ti.month) + '-' + str(ti.day) + '-' + str(ti.hour) + '-' + str(ti.minute)
-    + '-' + str(ti.second) + '/')
-tensorboad_dir = log_dir
 
 # Data_dir = 'faces'
 Data_dir1 = '/celeba/'
@@ -43,7 +51,17 @@ def draw_img(x):
     pass
 
 
-def __main__():
+def __main__(d1, d2, cuda):
+    os.environ["CUDA_VISIBLE_DEVICES"] = cuda
+    D1_LOSS = float(d1)
+    D2_LOSS = float(d2)
+    ti = datetime.datetime.now()
+    log_dir = (
+        'log/' + str(D1_LOSS) + '_' + str(D2_LOSS) + '/' + str(ti.month) + '-' + str(ti.day) + '-' + str(
+            ti.hour) + '-' + str(ti.minute)
+        + '-' + str(ti.second) + '/')
+    tensorboad_dir = log_dir
+
     # noise input
     noise_input = tf.placeholder(tf.float32, shape=[None, 100], name='noise')
     noise_sample_input = tf.placeholder(tf.float32, shape=[None, 100], name='noise')
@@ -182,4 +200,8 @@ def __main__():
 
 # =================================================================
 if __name__ == "__main__":
-    __main__()
+    arguments = docopt(__doc__)
+    d1 = arguments["<d1>"]
+    d2 = arguments["<d2>"]
+    cuda = arguments["<device>"]
+    __main__(d1, d2, cuda)
