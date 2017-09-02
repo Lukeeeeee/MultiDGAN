@@ -5,9 +5,11 @@ import os
 import numpy as np
 from glob import glob
 from PIL import Image
+from dataset import PATH
 
 
 def get_datalist(data_dir, data_pattern):
+    data_dir = PATH + data_dir
     image_list = glob(os.path.join(data_dir, data_pattern))
     return (image_list)
 

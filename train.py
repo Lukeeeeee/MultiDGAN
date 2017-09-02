@@ -6,6 +6,7 @@ from PIL import Image
 from glob import glob
 from model import *
 from pre_data import *
+import datetime
 
 Image_h = 96
 Image_w = 96
@@ -14,10 +15,17 @@ Epoch_num = 400
 Batch_size = 128
 G_learnrate = 1e-3
 D_learnrate = 1e-3
-tensorboad_dir = 'log55face'
+D1_LOSS = 0.5
+D2_LOSS = 0.5
+ti = datetime.datetime.now()
+log_dir = (
+     'log/' + str(D1_LOSS) + '_' + str(D2_LOSS) + '/' + str(ti.month) + '-' + str(ti.day) + '-' + str(ti.hour) + '-' + str(ti.minute)
+    + '-' + str(ti.second) + '/')
+tensorboad_dir = log_dir
+
 # Data_dir = 'faces'
-Data_dir1 = 'CelebA/images'
-Data_dir2 = 'dataset/faces/'
+Data_dir1 = '/celeba/'
+Data_dir2 = '/faces/'
 Data_pattern1 = '*.jpg'
 Data_pattern2 = '*.jpg'
 
@@ -96,9 +104,7 @@ def __main__():
     # loss_train_D = -(d_real + d_fake)
     # loss_train_G = (1 / 2) * (d_fake - 1) ** 2
     # loss_train_D = (1 / 2) * (d_real - 1) ** 2 + (1 / 2) * (d_fake) ** 2
-    # 训练生成器的优化器，对应判别器为不可训练
     g_optimizer = optimizer(loss_train_G, G_learnrate, G_vars, name='opt_train_G')
-    # 训练判别器的优化器
     d1_optimizer = optimizer(loss_train_D1, D_learnrate, name='opt_train_D1')
     d2_optimizer = optimizer(loss_train_D2, D_learnrate, name='opt_train_D2')
 
