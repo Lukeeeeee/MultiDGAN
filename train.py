@@ -61,6 +61,7 @@ def __main__(d1, d2, cuda):
             ti.hour) + '-' + str(ti.minute)
         + '-' + str(ti.second) + '/')
     tensorboad_dir = log_dir
+    img_dir = log_dir + '/img'
 
     # noise input
     noise_input = tf.placeholder(tf.float32, shape=[None, 100], name='noise')
@@ -196,6 +197,21 @@ def __main__(d1, d2, cuda):
 
                     })
                     summary_writer.add_summary(summary_all, count)
+
+                    img_res = sess.run(img_sample, feed_dict={
+                        noise_sample_input: noise_sample,
+                        noise_input: z,
+                        image_input1: img_batch1,
+                        image_input2: img_batch2,
+                    })
+                    temp_dir = img_dir + '/' + str(count) + '/'
+                    if os.path.exists(temp_dir) is False:
+                        os.makedirs(temp_dir)
+
+                    for id in range(len(img_res)):
+                        img = img_res[id]
+                        im = Image.fromarray(img)
+                        im.save(temp_dir + str(id) + '.jpg')
 
 
 # =================================================================
