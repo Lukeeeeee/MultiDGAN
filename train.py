@@ -128,6 +128,7 @@ def __main__(d1, d2, cuda):
     g_optimizer = optimizer(loss_train_G, G_learnrate, G_vars, name='opt_train_G')
     d1_optimizer = optimizer(loss_train_D1, D_learnrate, name='opt_train_D1')
     d2_optimizer = optimizer(loss_train_D2, D_learnrate, name='opt_train_D2')
+    noise_sample = np.random.normal(0, 1, [Batch_size, 100]).astype('float32')
 
     # noise_sample = np.random.uniform(-1,1,[Batch_size,100]).astype('float32')
     # ==============================Start training=============================
@@ -187,7 +188,7 @@ def __main__(d1, d2, cuda):
 
                 if idx % 20 == 0:
                     count = count + 1
-                    noise_sample = np.random.normal(0, 1, [Batch_size, 100]).astype('float32')
+                    # noise_sample = np.random.normal(0, 1, [Batch_size, 100]).astype('float32')
 
                     summary_all = sess.run(merged_summary_op, feed_dict={
                         noise_sample_input: noise_sample,
@@ -208,8 +209,8 @@ def __main__(d1, d2, cuda):
                     if os.path.exists(temp_dir) is False:
                         os.makedirs(temp_dir)
 
-                    for id in range(len(img_res)):
-                        img = img_res[id]
+                    for id in range(30):
+                        img = np.array(img_res[id], dtype=np.uint8)
                         im = Image.fromarray(img)
                         im.save(temp_dir + str(id) + '.jpg')
 
