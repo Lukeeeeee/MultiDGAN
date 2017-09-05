@@ -82,7 +82,6 @@ def __main__(d1, d2, cuda):
     D1 = decrim1(image_input1, True, None, batch_size=Batch_size)
     # param of d
 
-
     D2 = decrim2(image_input2, True, None, batch_size=Batch_size)
     # D_vars = []
     # for item in tf.trainable_variables():
