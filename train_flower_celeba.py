@@ -27,7 +27,7 @@ import datetime
 
 Image_h = 96
 Image_w = 96
-Sample_num = 30000
+Sample_num = 8000
 Epoch_num = 400
 
 Batch_size = 128
@@ -35,8 +35,8 @@ G_learnrate = 1e-3
 D_learnrate = 1e-3
 
 # Data_dir = 'faces'
-Data_dir1 = '/flower/'
-Data_dir2 = '/celeba/'
+Data_dir1 = '/celeba/'
+Data_dir2 = '/flower/'
 Data_pattern1 = '*.jpg'
 Data_pattern2 = '*.jpg'
 
@@ -57,7 +57,7 @@ def __main__(d1, d2, cuda):
     D2_LOSS = float(d2)
     ti = datetime.datetime.now()
     log_dir = (
-        'log/' + str(D1_LOSS) + '_' + str(D2_LOSS) + '/' + str(ti.month) + '-' + str(ti.day) + '-' + str(
+        'log/celeba_flower/' + str(D1_LOSS) + '_' + str(D2_LOSS) + '/' + str(ti.month) + '-' + str(ti.day) + '-' + str(
             ti.hour) + '-' + str(ti.minute)
         + '-' + str(ti.second) + '/')
     tensorboad_dir = log_dir
