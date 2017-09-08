@@ -27,7 +27,7 @@ import datetime
 
 Image_h = 96
 Image_w = 96
-Sample_num = 30000
+Sample_num = 5000
 Epoch_num = 400
 
 Batch_size = 128
@@ -134,8 +134,8 @@ def __main__(d1, d2, cuda):
         summary_writer = tf.summary.FileWriter(tensorboad_dir, sess.graph)
         # =============================
         sess.run(tf.global_variables_initializer())
-        image_list1 = get_cifar10(data_dir=Data_dir1, name='dog', w=Image_w, h=Image_h)[:Sample_num, ]
-        image_list2 = get_cifar10(data_dir=Data_dir1, name='cat', w=Image_w, h=Image_h)[:Sample_num, ]
+        image_list1 = get_cifar10(data_dir=Data_dir1, name='automobile', w=Image_w, h=Image_h)[:Sample_num, ]
+        image_list2 = get_cifar10(data_dir=Data_dir1, name='truck', w=Image_w, h=Image_h)[:Sample_num, ]
 
         # image_len = int(len(image_list1))
         batch_num = int(Sample_num / Batch_size)
